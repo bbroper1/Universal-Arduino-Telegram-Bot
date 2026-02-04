@@ -64,7 +64,7 @@ struct telegramMessage {
   String reply_to_text;
   String query_id;
 };
-
+using TBMessage = telegramMessage;
 class UniversalTelegramBot {
 public:
   UniversalTelegramBot(const String& token, Client &client);
