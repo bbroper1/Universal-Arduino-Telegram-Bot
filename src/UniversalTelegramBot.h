@@ -72,6 +72,7 @@ public:
   UniversalTelegramBot(const String& token, Client &client);
   void updateToken(const String& token);
   String getToken();
+  void applyCertificate();
   String sendGetToTelegram(const String& command);
   String sendPostToTelegram(const String& command, JsonObject payload);
   String
