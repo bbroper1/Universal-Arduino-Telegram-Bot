@@ -67,7 +67,7 @@ struct telegramMessage {
 using TBMessage = telegramMessage;
 class UniversalTelegramBot {
 public:
-  UniversalTelegramBot(const String& token, Client &client);
+  UniversalTelegramBot(const String& token, WiFiClientSecure &client);
   void updateToken(const String& token);
   String getToken();
   void applyCertificate();
@@ -132,7 +132,7 @@ public:
 private:
   // JsonObject * parseUpdates(String response);
   String _token;
-  Client *client;
+  WiFiClientSecure *client;
   void closeClient();
   bool getFile(String& file_path, long& file_size, const String& file_id);
   bool processResult(JsonObject result, int messageIndex);
