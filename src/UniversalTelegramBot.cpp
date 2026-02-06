@@ -38,7 +38,7 @@
 #define ZERO_COPY(STR)    ((char*)STR.c_str())
 #define BOT_CMD(STR)      buildCommand(F(STR))
 
-UniversalTelegramBot::UniversalTelegramBot(const String& token, Client &client) {
+UniversalTelegramBot::UniversalTelegramBot(const String& token, WiFiClientSecure &client) {
   updateToken(token);
   this->client = &client;
 }
