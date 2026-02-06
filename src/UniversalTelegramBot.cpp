@@ -151,11 +151,13 @@ String UniversalTelegramBot::sendPostToTelegram(const String& command, JsonObjec
   String headers;
 
   // Connect with api.telegram.org if not already connected
-  if (!client->connected()) {
-    #ifdef TELEGRAM_DEBUG  
-        Serial.println(F("[BOT Client]Connecting to server"));
-    #endif
-    if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
+if (!client->connected()) {
+  applyCertificate();
+
+  #ifdef TELEGRAM_DEBUG  
+      Serial.println(F("[BOT Client]Connecting to server"));
+  #endif
+  if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
       #ifdef TELEGRAM_DEBUG  
         Serial.println(F("[BOT Client]Connection error"));
       #endif
