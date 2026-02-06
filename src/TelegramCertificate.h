@@ -5,7 +5,7 @@
        Go Daddy Root Certificate Authority - G2
 */
 //ISRG Root X1 certifiate
-const char telegram_cert[] PROGMEM = R"EOF(
+const char TELEGRAM_CERTIFICATE_ROOT[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgISA5IhF6kRXKuX3sI5Yucs5cjAMA0GCSqGSIb3DQEBCwUA
 MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MR8wHQYDVQQD
