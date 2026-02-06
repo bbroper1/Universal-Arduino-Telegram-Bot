@@ -51,6 +51,12 @@ String UniversalTelegramBot::getToken() {
   return _token;
 }
 
+void UniversalTelegramBot::applyCertificate() {
+  #ifdef TELEGRAM_DEBUG
+    Serial.println(F("[BOT] Applying TLS certificate"));
+  #endif
+  client->setCACert(TELEGRAM_CERTIFICATE_ROOT);
+}
 String UniversalTelegramBot::buildCommand(const String& cmd) {
   String command;
 
