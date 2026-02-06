@@ -34,8 +34,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 #define TELEGRAM_SSL_PORT 443
 #define HANDLE_MESSAGES 1
 
-void applyCertificate();
-
 //unmark following line to enable debug mode
 //#define _debug
 
