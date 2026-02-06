@@ -208,11 +208,13 @@ String UniversalTelegramBot::sendMultipartFormDataToTelegram(
   const String boundary = F("------------------------b8f610217e83e29b");
 
   // Connect with api.telegram.org if not already connected
-  if (!client->connected()) {
-    #ifdef TELEGRAM_DEBUG  
-        Serial.println(F("[BOT Client]Connecting to server"));
-    #endif
-    if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
+if (!client->connected()) {
+  applyCertificate();
+
+  #ifdef TELEGRAM_DEBUG  
+      Serial.println(F("[BOT Client]Connecting to server"));
+  #endif
+  if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
       #ifdef TELEGRAM_DEBUG  
         Serial.println(F("[BOT Client]Connection error"));
       #endif
