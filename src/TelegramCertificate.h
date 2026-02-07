@@ -1,4 +1,5 @@
 #pragma once
+#include <Arduino.h>
 
 // Telegram / Let's Encrypt ISRG Root X1 chain for ESP32
 
