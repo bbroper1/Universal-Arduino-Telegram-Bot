@@ -1,5 +1,4 @@
 #pragma once
-#include <Arduino.h>
 // Telegram / Let's Encrypt ISRG Root X1 chain for ESP32
 
 // NOTE: Do NOT put this in PROGMEM when using setCACert() on ESP32.
