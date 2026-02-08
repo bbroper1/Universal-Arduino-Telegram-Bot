@@ -41,8 +41,8 @@
 UniversalTelegramBot::UniversalTelegramBot(const String& token, WiFiClientSecure &client) {
   updateToken(token);
   this->client = &client;
+  // TLS details (CA cert) are applied per-request in applyCertificate()
 }
-
 void UniversalTelegramBot::updateToken(const String& token) {
   _token = token;
 }
@@ -57,49 +57,46 @@ void UniversalTelegramBot::applyCertificate() {
   #endif
   client->setCACert(TELEGRAM_CERTIFICATE_ROOT);
 }
+
 String UniversalTelegramBot::buildCommand(const String& cmd) {
   String command;
-
   command += F("bot");
   command += _token;
   command += F("/");
   command += cmd;
-
   return command;
 }
 
 String UniversalTelegramBot::sendGetToTelegram(const String& command) {
   String body, headers;
-  
-  // Connect with api.telegram.org if not already connected
-if (!client->connected()) {
+
   applyCertificate();
+  client->stop();
 
-  #ifdef TELEGRAM_DEBUG  
-      Serial.println(F("[BOT]Connecting to server"));
+  #ifdef TELEGRAM_DEBUG
+    Serial.println(F("[BOT]Connecting to server"));
   #endif
+
   if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
-      #ifdef TELEGRAM_DEBUG  
-        Serial.println(F("[BOT]Connection error"));
-      #endif
-    }
+    #ifdef TELEGRAM_DEBUG
+      Serial.println(F("[BOT]Connection error"));
+    #endif
+    return "";
   }
-  if (client->connected()) {
 
-    #ifdef TELEGRAM_DEBUG  
-        Serial.println("sending: " + command);
-    #endif  
+  #ifdef TELEGRAM_DEBUG
+    Serial.println("sending: " + command);
+  #endif
 
-    client->print(F("GET /"));
-    client->print(command);
-    client->println(F(" HTTP/1.1"));
-    client->println(F("Host:" TELEGRAM_HOST));
-    client->println(F("Accept: application/json"));
-    client->println(F("Cache-Control: no-cache"));
-    client->println();
+  client->print(F("GET /"));
+  client->print(command);
+  client->println(F(" HTTP/1.1"));
+  client->println(F("Host:" TELEGRAM_HOST));
+  client->println(F("Accept: application/json"));
+  client->println(F("Cache-Control: no-cache"));
+  client->println();
 
-    readHTTPAnswer(body, headers);
-  }
+  readHTTPAnswer(body, headers);
 
   return body;
 }
@@ -151,18 +148,20 @@ String UniversalTelegramBot::sendPostToTelegram(const String& command, JsonObjec
   String headers;
 
   // Connect with api.telegram.org if not already connected
-if (!client->connected()) {
-  applyCertificate();
+applyCertificate();
+client->stop();
 
-  #ifdef TELEGRAM_DEBUG  
-      Serial.println(F("[BOT Client]Connecting to server"));
+#ifdef TELEGRAM_DEBUG
+  Serial.println(F("[BOT Client]Connecting to server"));
+#endif
+if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
+  #ifdef TELEGRAM_DEBUG
+    Serial.println(F("[BOT Client]Connection error"));
   #endif
-  if (!client->connect(TELEGRAM_HOST, TELEGRAM_SSL_PORT)) {
-      #ifdef TELEGRAM_DEBUG  
-        Serial.println(F("[BOT Client]Connection error"));
-      #endif
-    }
-  }
+  return "";
+}
+
+// POST URI
   if (client->connected()) {
     // POST URI
     client->print(F("POST /"));
