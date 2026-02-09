@@ -1,7 +1,7 @@
 #pragma once
-// Telegram / Let's Encrypt ISRG Root X1 chain for ESP32
 
-// NOTE: Do NOT put this in PROGMEM when using setCACert() on ESP32.
+// ISRG Root X1 for Telegram (Cloudflare)
+// Clean LF-only PEM, no BOM, no CRLF, no trailing spaces.
 
 const char TELEGRAM_CERTIFICATE_ROOT[] = R"EOF(
 -----BEGIN CERTIFICATE-----
